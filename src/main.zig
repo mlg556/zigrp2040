@@ -51,11 +51,11 @@ pub fn main() !void {
 
     var i: u32 = 0;
     while (true) : (i += 1) {
-        led_b.put(0);
+        led_g.put(0);
         std.log.info("Hello world! ({})", .{i});
         time.sleep_ms(1_000);
 
-        led_b.put(1);
+        led_g.put(1);
         time.sleep_ms(1_000);
     }
 }
