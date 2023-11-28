@@ -6,9 +6,7 @@ const time = rp2040.time;
 const gpio = rp2040.gpio;
 const clocks = rp2040.clocks;
 
-const led_r = gpio.num(18);
-const led_g = gpio.num(19);
-const led_b = gpio.num(20);
+const led = gpio.num(18); // red led on tiny2040
 
 const uart = rp2040.uart.num(0);
 const baud_rate = 115200;
@@ -28,17 +26,8 @@ pub const std_options = struct {
 };
 
 pub fn main() !void {
-    led_r.set_function(.sio);
-    led_r.set_direction(.out);
-    led_r.put(1);
-
-    led_g.set_function(.sio);
-    led_g.set_direction(.out);
-    led_g.put(1);
-
-    led_b.set_function(.sio);
-    led_b.set_direction(.out);
-    led_b.put(1);
+    led.set_function(.sio);
+    led.set_direction(.out);
 
     uart.apply(.{
         .baud_rate = baud_rate,
@@ -51,11 +40,8 @@ pub fn main() !void {
 
     var i: u32 = 0;
     while (true) : (i += 1) {
-        led_g.put(0);
+        led.toggle();
         std.log.info("Hello world! ({})", .{i});
-        time.sleep_ms(1_000);
-
-        led_g.put(1);
         time.sleep_ms(1_000);
     }
 }
